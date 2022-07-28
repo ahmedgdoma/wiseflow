@@ -1,0 +1,4 @@
+.idea
+data/*
+src/app/ext/vendor/*
+cache/*

@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+    wise_db:
+        container_name: wise_db
+        image: mariadb:10.8.2
+        restart: always
+        volumes:
+            - "/opt/wise_db:/var/lib/mysql"
+        environment:
+            MARIADB_ROOT_PASSWORD: test
+            MARIADB_DATABASE: wiseflow
+            MARIADB_USER: wiseflow
+            MARIADB_PASSWORD: test
+        ports:
+            - 3306:3306
+    wise_php:
+        container_name: wise_php
+        build:
+            context: ./php
+        image: test-php:latest
+        environment:
+            SERVER_ENVIRONMENT: "local"
+            DATABASE_URL: "mysql://wiseflow:test@wise_db:3306/wiseflow"
+        ports:
+            - '9000:9000'
+        volumes:
+            - ../app/:/app/
+    wise_nginx:
+        container_name: wise_nginx
+        build:
+            context: .
+            dockerfile: nginx/Dockerfile
+        image: test-nginx:latest
+        volumes:
+            - ../app/:/app/
+        ports:
+            - 80:80
+    wise_phpmyadmin:
+        container_name: wise_phpmyadmin
+        image: phpmyadmin
+        restart: always
+        ports:
+            - 9997:80
+        depends_on:
+            - wise_db
+        environment:
+            - PMA_ARBITRARY=1
+            - PMA_HOST=wise_db

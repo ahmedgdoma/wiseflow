@@ -16,7 +16,7 @@ services:
             - 3306:3306
     wise_php:
         container_name: wise_php
-        command: "symfony serve --port=8000"
+        command: bash -c "symfony serve --port=8000"
         build:
             context: ./php
         image: test-php:latest

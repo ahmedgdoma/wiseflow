@@ -10,14 +10,14 @@ the project runs on url
 phpmyadmin runs on url 
 [http://localhost:9997](http://localhost:9997)
 ## 2 types of filters applied:
-###api-platform:
+### api-platform:
 
 the best known symfony api framework [api-platform](https://api-platform.com/)
 to visit the docs page of our apis please visit 
 [http://localhost:8500/api](http://localhost:8500/api) then you can try the endpoint
 `api/cars` with it's filters
 
-###custom made filter:
+### custom made filter:
 
 the endpoint url is
 [http://localhost:8500/cars](http://localhost:8500/cars)

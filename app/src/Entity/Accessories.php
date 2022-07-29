@@ -3,8 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\AccessoriesRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -23,13 +21,6 @@ class Accessories
     #[Groups("CARS::READ")]
     private ?string $name = null;
 
-//    #[ORM\ManyToMany(targetEntity: Car::class, mappedBy: 'accessories')]
-//    private Collection $cars;
-
-//    public function __construct()
-//    {
-//        $this->cars = new ArrayCollection();
-//    }
 
     public function getId(): ?int
     {
@@ -47,31 +38,4 @@ class Accessories
 
         return $this;
     }
-
-//    /**
-//     * @return Collection<int, Car>
-//     */
-//    public function getCars(): Collection
-//    {
-//        return $this->cars;
-//    }
-//
-//    public function addCar(Car $car): self
-//    {
-//        if (!$this->cars->contains($car)) {
-//            $this->cars->add($car);
-//            $car->addAccessory($this);
-//        }
-//
-//        return $this;
-//    }
-//
-//    public function removeCar(Car $car): self
-//    {
-//        if ($this->cars->removeElement($car)) {
-//            $car->removeAccessory($this);
-//        }
-//
-//        return $this;
-//    }
 }

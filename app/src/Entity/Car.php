@@ -135,4 +135,12 @@ class Car
 
         return $this;
     }
+
+    /**
+     * @return array
+     */
+    public static function getVars():array
+    {
+        return array_keys(get_class_vars(self::class));
+    }
 }

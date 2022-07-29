@@ -2,13 +2,29 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\BooleanFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\NumericFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\RangeFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Core\Bridge\Elasticsearch\DataProvider\Filter\TermFilter;
 use App\Repository\CarRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Symfony\Component\Serializer\Annotation\Groups;
+use ApiPlatform\Core\Annotation\ApiFilter;
 
 #[ORM\Entity(repositoryClass: CarRepository::class)]
+#[ApiFilter(NumericFilter::class, properties: ['model'])]
+#[ApiFilter(RangeFilter::class, properties: ['model'])]
+#[ApiFilter(SearchFilter::class, properties: [ 'color' => 'exact', 'brand.name' => 'partial'])]
+#[ApiFilter(SearchFilter::class, properties: ['accessories.name'])]
+#[ApiFilter(BooleanFilter::class, properties: ['gasEconomy'])]
+#[ApiFilter(DateFilter::class, properties: ['createdAt'])]
+#[ApiFilter(OrderFilter::class, properties: ['id' => 'ASC', 'model' => 'ASC', 'createdAt' => 'ASC'])]
 class Car
 {
     use TimestampableEntity;
@@ -16,9 +32,11 @@ class Car
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups("CARS::READ")]
     private ?int $id = null;
 
     #[ORM\Column]
+    #[Groups("CARS::READ")]
     private ?int $model = null;
 
     #[ORM\Column(length: 50)]
@@ -27,11 +45,13 @@ class Car
     #[ORM\Column]
     private ?bool $gasEconomy = null;
 
-    #[ORM\ManyToOne(inversedBy: 'cars')]
+    #[ORM\ManyToOne()]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups("CARS::READ")]
     private ?Brand $brand = null;
 
-    #[ORM\ManyToMany(targetEntity: Accessories::class, inversedBy: 'cars')]
+    #[ORM\ManyToMany(targetEntity: Accessories::class)]
+    #[Groups("CARS::READ")]
     private Collection $accessories;
 
     public function __construct()

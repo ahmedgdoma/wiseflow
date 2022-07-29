@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: AccessoriesRepository::class)]
 class Accessories
@@ -19,15 +20,16 @@ class Accessories
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups("CARS::READ")]
     private ?string $name = null;
 
-    #[ORM\ManyToMany(targetEntity: Car::class, mappedBy: 'accessories')]
-    private Collection $cars;
+//    #[ORM\ManyToMany(targetEntity: Car::class, mappedBy: 'accessories')]
+//    private Collection $cars;
 
-    public function __construct()
-    {
-        $this->cars = new ArrayCollection();
-    }
+//    public function __construct()
+//    {
+//        $this->cars = new ArrayCollection();
+//    }
 
     public function getId(): ?int
     {
@@ -46,30 +48,30 @@ class Accessories
         return $this;
     }
 
-    /**
-     * @return Collection<int, Car>
-     */
-    public function getCars(): Collection
-    {
-        return $this->cars;
-    }
-
-    public function addCar(Car $car): self
-    {
-        if (!$this->cars->contains($car)) {
-            $this->cars->add($car);
-            $car->addAccessory($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCar(Car $car): self
-    {
-        if ($this->cars->removeElement($car)) {
-            $car->removeAccessory($this);
-        }
-
-        return $this;
-    }
+//    /**
+//     * @return Collection<int, Car>
+//     */
+//    public function getCars(): Collection
+//    {
+//        return $this->cars;
+//    }
+//
+//    public function addCar(Car $car): self
+//    {
+//        if (!$this->cars->contains($car)) {
+//            $this->cars->add($car);
+//            $car->addAccessory($this);
+//        }
+//
+//        return $this;
+//    }
+//
+//    public function removeCar(Car $car): self
+//    {
+//        if ($this->cars->removeElement($car)) {
+//            $car->removeAccessory($this);
+//        }
+//
+//        return $this;
+//    }
 }

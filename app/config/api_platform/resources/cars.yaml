@@ -1,12 +1,14 @@
 resources:
-  App\Entity\AddonsSettings:
-    shortName: "Addons-settings"
+  App\Entity\Car:
+    shortName: "cars"
     properties:
       id:
         identifier: true
     attributes:
-      route_prefix: /app
       pagination_partial: false
+      normalization_context:
+        groups: [ "CARS::READ" ]
     itemOperations:
       get: ~
-    collectionOperations: {}
+    collectionOperations:
+      get: ~

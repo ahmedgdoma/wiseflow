@@ -1,0 +1,14 @@
+api_platform:
+    formats:
+        json: [ 'application/json' ]
+        yaml: [ 'application/x-yaml' ]
+        html: [ 'text/html' ]
+    mapping:
+        paths:
+            - '%kernel.project_dir%/src/Entity' # default configuration for annotations
+            - '%kernel.project_dir%/config/api_platform' # yaml or xml directory configuration
+    patch_formats:
+        json: [ 'application/merge-patch+json' ]
+        jsonapi: [ 'application/vnd.api+json' ]
+    swagger:
+        versions: [3]

@@ -16,6 +16,7 @@ services:
             - 3306:3306
     wise_php:
         container_name: wise_php
+        command: "symfony serve --port=8000"
         build:
             context: ./php
         image: test-php:latest
@@ -24,18 +25,9 @@ services:
             DATABASE_URL: "mysql://wiseflow:test@wise_db:3306/wiseflow"
         ports:
             - '9000:9000'
+            - '8500:8000'
         volumes:
             - ../app/:/app/
-    wise_nginx:
-        container_name: wise_nginx
-        build:
-            context: .
-            dockerfile: nginx/Dockerfile
-        image: test-nginx:latest
-        volumes:
-            - ../app/:/app/
-        ports:
-            - 80:80
     wise_phpmyadmin:
         container_name: wise_phpmyadmin
         image: phpmyadmin

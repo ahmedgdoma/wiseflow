@@ -1,0 +1,12 @@
+resources:
+  App\Entity\AddonsSettings:
+    shortName: "Addons-settings"
+    properties:
+      id:
+        identifier: true
+    attributes:
+      route_prefix: /app
+      pagination_partial: false
+    itemOperations:
+      get: ~
+    collectionOperations: {}
